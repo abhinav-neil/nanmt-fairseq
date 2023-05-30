@@ -1,0 +1,11 @@
+ipykernel
+torch==1.12.1+cu113
+sacremoses
+fairseq==0.12.2
+wandb
+datasets==2.10.0
+evaluate
+bert-score
+nltk
+rouge_score
+git+https://github.com/google-research/bleurt.git

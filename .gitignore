@@ -1,6 +1,6 @@
 # files
 *.py[cod]
-*.txt
+# *.txt
 *.pt
 *.pdf
 .DS_Store
