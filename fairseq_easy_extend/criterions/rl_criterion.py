@@ -38,6 +38,9 @@ class RLCriterion(FairseqCriterion):
         self.ter = load('ter')
         self.bertscore = load('bertscore')
         self.bleurt = load('bleurt', module_type='metric', checkpoint='bleurt-large-128')
+        self.gbleu = load('google_bleu')
+        self.nist = load('nist_mt')
+        self.wer = load("wer")
         # init wandb project
         wandb.init(project=wandb_project)
         if wandb_run:
@@ -98,7 +101,7 @@ class RLCriterion(FairseqCriterion):
                     "UNKNOWNTOKENINREF" if escape_unk else "UNKNOWNTOKENINHYP"
                 ),
             )
-            s = self.tokenizer.decode(s)
+        s = self.tokenizer.decode(s)
         return s
 
     def compute_reward(self, preds, targets):
@@ -138,6 +141,19 @@ class RLCriterion(FairseqCriterion):
         elif self.metric == "bleurt":
             bleurt_scores = self.bleurt.compute(predictions=preds_str, references=targets_str)['scores']
             reward = [[score] * seq_len for score in bleurt_scores]
+
+        elif self.metric == "google_bleu":
+            bleurt_scores = self.bleurt.compute(predictions=preds_str, references=targets_str)['scores']
+            reward = [[score] * seq_len for score in bleurt_scores]
+
+        elif self.metric == "nist_mt":
+            bleurt_scores = self.nist.compute(predictions=preds_str, references=targets_str)['scores']
+            reward = [[score] * seq_len for score in bleurt_scores]
+
+        elif self.metric == "wer":
+            bleurt_scores = self.wer.compute(predictions=preds_str, references=targets_str)['scores']
+            reward = [[score] * seq_len for score in bleurt_scores]
+
 
         else:
             raise ValueError(f"metric {self.metric} not supported")

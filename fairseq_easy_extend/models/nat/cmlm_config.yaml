@@ -7,7 +7,7 @@ task:
   noise: random_mask
 criterion:
   _name: rl_loss
-  sentence_level_metric: bertscore # one of bleu, chrf, meteor, rouge, ter, bertscore, bleurt
+  sentence_level_metric: chrf # one of bleu, chrf, meteor, rouge, ter, bertscore, bleurt
   sampling: multinomial
   # wandb_entity: abhinav-neil
   # use_wandb: true
