@@ -3,6 +3,7 @@
 *.txt
 *.pt
 *.pdf
+.DS_Store
 
 # folders
 __pycache__
