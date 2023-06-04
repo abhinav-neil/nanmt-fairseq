@@ -1,8 +1,8 @@
 # files
 *.py[cod]
-# *.txt
 *.pt
 *.pdf
+evaluate_gen.py
 .DS_Store
 
 # folders
@@ -11,5 +11,4 @@ __pycache__
 iwslt14.tokenized.de-en
 outputs
 wandb
-```
-evaluate_gen.py
+docs

@@ -84,9 +84,6 @@ class RLCriterion(FairseqCriterion):
             "reward": reward.detach()
         }
         
-        # if reduce:
-            # self.reduce_metrics(logging_output)
-
         return loss, sample_size, logging_output
 
     def decode(self, toks, ref="tgt", escape_unk=False):
@@ -175,8 +172,7 @@ class RLCriterion(FairseqCriterion):
             
             # compute reward metric
             reward = self.compute_reward(preds, targets, sources)
-            # print(f'reward: {reward}')
-        # print(f'shape of probs: {probs.shape}, shape of targets: {targets.shape}, shape of masks: {masks.shape}, shape of preds: {preds.shape}, shape of rewards: {reward.shape}')
+
         # apply mask
         if masks is not None:
             masks = masks.to(self.device)
@@ -185,7 +181,6 @@ class RLCriterion(FairseqCriterion):
             reward, preds = reward[masks], preds[masks]
 
         # get the log probs of the samples
-        # log_probs = F.log_softmax(probs, dim=-1)
         log_probs = torch.log(probs)
         sample_log_probs = torch.gather(log_probs, -1, preds.unsqueeze(1)).squeeze()
         
